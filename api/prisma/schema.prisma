@@ -1,0 +1,36 @@
+// This is your Prisma schema file,
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String      @id @default(uuid())
+  email      String      @unique
+  username   String
+  password   String
+  groupTasks GroupTask[]
+}
+
+model GroupTask {
+  id     Int    @id @default(autoincrement())
+  title  String
+  User   User   @relation(fields: [idUser], references: [id])
+  idUser String
+  tasks  Task[]
+}
+
+model Task {
+  id          Int       @id @default(autoincrement())
+  titleTask   String
+  complete    Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updated_at  DateTime  @default(now())
+  groupTask   GroupTask @relation(fields: [idGroupTask], references: [id])
+  idGroupTask Int
+}

@@ -1,0 +1,63 @@
+@baseUrl = http://localhost:3001
+@token = {{authenticate.response.body.acess_token}}
+
+# @name create_account
+POST {{baseUrl}}/users/
+Content-Type: application/json
+
+{
+  "username": " Filipe",
+  "email": "filipe@teste3.com.br",
+  "password": "12345678"
+}
+
+###
+
+# @name authenticate
+POST {{baseUrl}}/auth
+Content-Type: application/json
+
+{
+  "email": "filipe@teste.com",
+  "password": "Teste123@"
+}
+
+###
+
+# @name create_task
+POST {{baseUrl}}/tasks/
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "title": "Box de teste",
+  "idUser": "1",
+  "tasks": [
+    {
+      "titleTask": "teste 3",
+      "idGroupTask": 2
+    },
+    {
+      "titleTask": "teste 45",
+      "idGroupTask": 2
+    }
+  ]
+}
+
+###
+
+GET {{baseUrl}}/tasks/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+GET {{baseUrl}}/tasks/1/6
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+DELETE  {{baseUrl}}/tasks/1/6
+Content-Type: application/json
+Authorization: Bearer {{token}}
